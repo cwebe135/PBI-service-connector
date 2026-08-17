@@ -12,6 +12,7 @@ import os
 
 # location of current .mez file
 debug_mez = 'bin/AnyCPU/Debug/PBIServiceMetadata.mez'
+os.makedirs('bin/AnyCPU/Debug', exist_ok=True)
 
 # get list of files in current .mez
 with zipfile.ZipFile(debug_mez, 'r') as zip_old:

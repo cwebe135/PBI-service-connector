@@ -1,2 +1,3 @@
 .vscode/*
+*.mez
 PBIServiceMetadata.query.pq
