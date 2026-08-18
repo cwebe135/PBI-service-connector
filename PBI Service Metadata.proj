@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project>
+  <PropertyGroup>
+    <ProjectName>PBIServiceMetadata</ProjectName>
+    <OutputPath>bin/AnyCPU/Debug/</OutputPath>
+    <MezOutputPath>{OutputPath}{ProjectName}.mez</MezOutputPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <MezContent Include="PBIServiceMetadata.pq" />
+    <MezContent Include="PBI Service Metadata16.png" />
+    <MezContent Include="PBI Service Metadata20.png" />
+    <MezContent Include="PBI Service Metadata24.png" />
+    <MezContent Include="PBI Service Metadata32.png" />
+    <MezContent Include="PBI Service Metadata40.png" />
+    <MezContent Include="PBI Service Metadata48.png" />
+    <MezContent Include="PBI Service Metadata64.png" />
+    <MezContent Include="PBI Service Metadata80.png" />
+    <MezContent Include="resources.resx" />
+    <MezContent Include="manifest.xml" />
+  </ItemGroup>
+</Project>

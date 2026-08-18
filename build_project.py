@@ -9,25 +9,32 @@ import platform
 import zipfile
 import sys
 import os
+import xml.etree.ElementTree as ET
 
-# location of current .mez file
-debug_mez = 'bin/AnyCPU/Debug/PBIServiceMetadata.mez'
-os.makedirs('bin/AnyCPU/Debug', exist_ok=True)
+# get configurations for .mez
+projTree = ET.parse('PBI Service Metadata.proj')
+projRoot = projTree.getroot()
+# get properties
+propertyElement = projRoot.find('PropertyGroup')
+properties = {child.tag: child.text for child in propertyElement}
+# get files
+itemsElement = projRoot.find('ItemGroup')
+items = [child.attrib['Include'] for child in itemsElement.findall('MezContent')]
 
-# get list of files in current .mez
-with zipfile.ZipFile(debug_mez, 'r') as zip_old:
-    file_list = zip_old.namelist()
+debugMez = properties['MezOutputPath'].format(**properties)
+os.makedirs(properties['OutputPath'], exist_ok=True)
 
 # create a new .mez with the same files in it
-z_new = zipfile.ZipFile(debug_mez, 'w')
-for file in file_list:
+z_new = zipfile.ZipFile(debugMez, 'w')
+for file in items:
     z_new.write(file)
 z_new.close()
 print("New .mez file created")
 
+# Copy .mez into Custom Connectors directory
 if platform.system() == 'Windows' and len(sys.argv) > 1 and sys.argv[1] == "distribute":
     # Power BI Desktop only available for Windows systems
-    # Copies .mez into Custom Connectors directory
+    
     from shutil import copyfile
     from ctypes import wintypes, windll, create_unicode_buffer
 
@@ -38,5 +45,5 @@ if platform.system() == 'Windows' and len(sys.argv) > 1 and sys.argv[1] == "dist
 
     os.makedirs(customConnectorsDirectory + '/Microsoft Power BI Desktop/Custom Connectors', exist_ok=True)
 
-    copyfile(debug_mez, customConnectorsDirectory + '/Microsoft Power BI Desktop/Custom Connectors/PBIServiceMetadata.mez')
+    copyfile(debugMez, customConnectorsDirectory + '/Microsoft Power BI Desktop/Custom Connectors/PBIServiceMetadata.mez')
     print(".mez file copied to Custom Connectors directory")
