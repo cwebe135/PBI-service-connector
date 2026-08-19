@@ -1,4 +1,4 @@
-[Version = "0.2.0"]
+[Version = "0.3.0"]
 section PBIServiceMetadata;
 
 BaseURL = "https://api.powerbi.com/v1.0/myorg/";
